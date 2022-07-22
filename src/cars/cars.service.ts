@@ -5,55 +5,54 @@ import { CreateCarDto, UpdateCarDto } from './dto';
 
 @Injectable()
 export class CarsService {
-    
-    private cars: Car[] = [
-        // {
-        //     id: uuid(),
-        //     brand: 'Jeep',
-        //     model: 'Cherokee',
-        // },
-    ];
+  private cars: Car[] = [
+    // {
+    //     id: uuid(),
+    //     brand: 'Jeep',
+    //     model: 'Cherokee',
+    // },
+  ];
 
-    findAll() {
-        return this.cars;
-    }
+  findAll() {
+    return this.cars;
+  }
 
-    findOneById(id: string) {
-        
-        const car = this.cars.find(car => car.id === id);
+  findOneById(id: string) {
+    const car = this.cars.find((car) => car.id === id);
 
-        if(!car) throw new NotFoundException(`El auto con el id: '${id}' no encontrado`);
+    if (!car)
+      throw new NotFoundException(`El auto con el id: '${id}' no encontrado`);
 
-        return car;
-    }
+    return car;
+  }
 
-    create(createCarDto: CreateCarDto) {
-        const car: Car = {
-            id: uuid(),
-            ...createCarDto
-        };
+  create(createCarDto: CreateCarDto) {
+    const car: Car = {
+      id: uuid(),
+      ...createCarDto,
+    };
 
-        this.cars.push(car);
+    this.cars.push(car);
 
-        return car;
-        
-    }
+    return car;
+  }
 
-    update(id: string, updateCarDto: UpdateCarDto) {
-        const carDB = this.findOneById(id);
+  update(id: string, updateCarDto: UpdateCarDto) {
+    const carDB = this.findOneById(id);
 
-        if(!carDB) throw new NotFoundException(`El auto con el id: '${id}' no encontrado`);
+    if (!carDB)
+      throw new NotFoundException(`El auto con el id: '${id}' no encontrado`);
 
-        const car: Car = {
-            ...carDB,
-            ...updateCarDto,
-            id
-        };
+    const car: Car = {
+      ...carDB,
+      ...updateCarDto,
+      id,
+    };
 
-        return car;
-    }
+    return car;
+  }
 
-    fillCarsWithSeedData( cars: Car[] ) {
-        this.cars = cars;
-    }
+  fillCarsWithSeedData(cars: Car[]) {
+    this.cars = cars;
+  }
 }

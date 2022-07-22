@@ -6,17 +6,15 @@ import { BrandsService } from 'src/brands/brands.service';
 
 @Injectable()
 export class SeedService {
-
   constructor(
     private readonly carsService: CarsService,
     private readonly brandsService: BrandsService,
   ) {}
 
   populateDB() {
-
     this.carsService.fillCarsWithSeedData(CARS_SEED);
     this.brandsService.fillBrandsWithSeedData(BRANDS_SEED);
-    
+
     return 'Seed excecuted';
   }
 }

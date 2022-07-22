@@ -6,25 +6,23 @@ import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class BrandsService {
-
   private brands: Brand[] = [
     // {
     //   id: uuid(),
     //   name: 'Toyota',
     //   createdAt: new Date().getDate(),
     // }
-  ]
-
+  ];
 
   create(createBrandDto: CreateBrandDto) {
     const brand: Brand = {
       id: uuid(),
       name: createBrandDto.name.toLocaleLowerCase(),
-      createdAt: new Date().getTime()
-    }
+      createdAt: new Date().getTime(),
+    };
 
     this.brands.push(brand);
-    
+
     return brand;
   }
 
@@ -33,23 +31,24 @@ export class BrandsService {
   }
 
   findOne(id: string) {
-    const brand = this.brands.find(brand => brand.id === id);
-    if(!brand) throw new NotFoundException(`El brand con el id: '${id}' no encontrado`);
+    const brand = this.brands.find((brand) => brand.id === id);
+    if (!brand)
+      throw new NotFoundException(`El brand con el id: '${id}' no encontrado`);
 
     return brand;
   }
 
   update(id: string, updateBrandDto: UpdateBrandDto) {
     let brandDb = this.findOne(id);
-    this.brands = this.brands.map(brand => {
-      if(brand.id === id) {
+    this.brands = this.brands.map((brand) => {
+      if (brand.id === id) {
         brandDb = {
           ...brandDb,
           ...updateBrandDto,
           name: updateBrandDto.name.toLocaleLowerCase(),
           updatedAt: new Date().getTime(),
-          id
-        }
+          id,
+        };
         return brandDb;
       }
       return brand;
@@ -59,11 +58,10 @@ export class BrandsService {
   }
 
   remove(id: string) {
-    this.brands = this.brands.filter( brand => brand.id !== id );
+    this.brands = this.brands.filter((brand) => brand.id !== id);
   }
 
-  
-  fillBrandsWithSeedData( Brands: Brand[] ) {
-      this.brands = Brands;
+  fillBrandsWithSeedData(Brands: Brand[]) {
+    this.brands = Brands;
   }
 }
